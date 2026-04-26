@@ -21,6 +21,126 @@
   max-width: 65ch;
 }
 
+.summary {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 1000px) {
+  .summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+.summaryCard {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  background: color-mix(in oklab, var(--bg) 92%, white);
+}
+
+.summaryLabel {
+  font-size: 12px;
+  color: color-mix(in oklab, var(--text) 70%, transparent);
+  margin-bottom: 6px;
+}
+
+.summaryValue {
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.summaryMuted {
+  font-weight: 500;
+  color: color-mix(in oklab, var(--text) 65%, transparent);
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+@media (max-width: 900px) {
+  .charts {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chartWrap {
+  height: 300px;
+}
+
+.cssChart {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.cssBarRow {
+  display: grid;
+  grid-template-columns: 120px 1fr 64px;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 520px) {
+  .cssBarRow {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+.cssBarLabel {
+  font-size: 12px;
+  color: color-mix(in oklab, var(--text) 78%, transparent);
+  text-transform: none;
+}
+
+.cssBarTrack {
+  height: 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--bg) 88%, white);
+  overflow: hidden;
+}
+
+.cssBarFill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+.cssBarFill.alt {
+  background: color-mix(in oklab, var(--accent) 78%, white);
+}
+
+.cssBarValue {
+  text-align: right;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in oklab, var(--text) 80%, transparent);
+}
+
+@media (max-width: 520px) {
+  .cssBarValue {
+    text-align: left;
+  }
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

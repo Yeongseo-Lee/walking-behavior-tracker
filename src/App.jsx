@@ -85,6 +85,53 @@ function App() {
     }
   }, [entries])
 
+  const chartData = useMemo(() => {
+    const purposeTotals = new Map(purposeOptions.map((p) => [p, 0]))
+    const barrierCounts = new Map(barrierOptions.map((b) => [b, 0]))
+
+    for (const e of entries) {
+      const minutes = Number(e?.minutes) || 0
+
+      const purpose = e?.purpose
+      if (typeof purpose === 'string' && purposeTotals.has(purpose)) {
+        purposeTotals.set(purpose, purposeTotals.get(purpose) + minutes)
+      } else if (typeof purpose === 'string') {
+        purposeTotals.set(purpose, (purposeTotals.get(purpose) ?? 0) + minutes)
+      }
+
+      const barrier = e?.barrier
+      if (typeof barrier === 'string' && barrierCounts.has(barrier)) {
+        barrierCounts.set(barrier, barrierCounts.get(barrier) + 1)
+      } else if (typeof barrier === 'string') {
+        barrierCounts.set(barrier, (barrierCounts.get(barrier) ?? 0) + 1)
+      }
+    }
+
+    const minutesByPurpose = Array.from(purposeTotals.entries()).map(([name, minutes]) => ({
+      name,
+      minutes,
+    }))
+
+    const barriersFrequency = Array.from(barrierCounts.entries()).map(([name, count]) => ({
+      name,
+      count,
+    }))
+
+    return { minutesByPurpose, barriersFrequency }
+  }, [entries, purposeOptions, barrierOptions])
+
+  const chartSummary = useMemo(() => {
+    const maxMinutes = chartData.minutesByPurpose.reduce(
+      (max, d) => (d.minutes > max ? d.minutes : max),
+      0,
+    )
+    const maxBarrierCount = chartData.barriersFrequency.reduce(
+      (max, d) => (d.count > max ? d.count : max),
+      0,
+    )
+    return { maxMinutes, maxBarrierCount }
+  }, [chartData])
+
   function updateField(name, value) {
     setForm((prev) => ({ ...prev, [name]: value }))
   }
@@ -97,7 +144,7 @@ function App() {
     if (!Number.isFinite(minutesNumber) || minutesNumber < 0) return
 
     const newEntry = {
-      id: crypto?.randomUUID?.() ?? String(Date.now()),
+      id: Date.now().toString(),
       date: form.date,
       minutes: minutesNumber,
       purpose: form.purpose,
@@ -152,6 +199,62 @@ function App() {
           </div>
         </section>
       </header>
+
+      <section className="charts" aria-label="Charts">
+        <div className="card">
+          <h2 className="cardTitle">Total minutes by purpose</h2>
+          {entries.length === 0 ? (
+            <div className="empty">No chart data yet.</div>
+          ) : (
+            <div className="chartWrap" role="img" aria-label="Bar chart of minutes by purpose">
+              <div className="cssChart" aria-hidden="true">
+                {chartData.minutesByPurpose.map((d) => {
+                  const pct =
+                    chartSummary.maxMinutes === 0
+                      ? 0
+                      : Math.round((d.minutes / chartSummary.maxMinutes) * 100)
+                  return (
+                    <div className="cssBarRow" key={d.name}>
+                      <div className="cssBarLabel">{d.name}</div>
+                      <div className="cssBarTrack">
+                        <div className="cssBarFill" style={{ width: `${pct}%` }} />
+                      </div>
+                      <div className="cssBarValue">{d.minutes}</div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="card">
+          <h2 className="cardTitle">Barrier frequency</h2>
+          {entries.length === 0 ? (
+            <div className="empty">No chart data yet.</div>
+          ) : (
+            <div className="chartWrap" role="img" aria-label="Bar chart of barrier frequency">
+              <div className="cssChart" aria-hidden="true">
+                {chartData.barriersFrequency.map((d) => {
+                  const pct =
+                    chartSummary.maxBarrierCount === 0
+                      ? 0
+                      : Math.round((d.count / chartSummary.maxBarrierCount) * 100)
+                  return (
+                    <div className="cssBarRow" key={d.name}>
+                      <div className="cssBarLabel">{d.name}</div>
+                      <div className="cssBarTrack">
+                        <div className="cssBarFill alt" style={{ width: `${pct}%` }} />
+                      </div>
+                      <div className="cssBarValue">{d.count}</div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
 
       <main className="grid">
         <section className="card" aria-label="New walking entry">
