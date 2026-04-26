@@ -2,6 +2,10 @@
 
 A simple digital health prototype for tracking walking behavior patterns and visualizing how walking varies by purpose and barriers.
 
+## Live Demo
+
+[Open the live app](https://walking-behavior-tracker.vercel.app)
+
 ## Overview
 
 This project is a beginner-friendly React web app that allows users to record daily walking behavior and explore simple behavior patterns through summary cards and charts.
