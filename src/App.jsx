@@ -202,7 +202,10 @@ function App() {
 
       <section className="charts" aria-label="Charts">
         <div className="card">
-          <h2 className="cardTitle">Total minutes by purpose</h2>
+          <div className="cardHeader">
+            <h2 className="cardTitle">Total minutes by purpose</h2>
+            <div className="cardMeta">Minutes summed across all entries</div>
+          </div>
           {entries.length === 0 ? (
             <div className="empty">No chart data yet.</div>
           ) : (
@@ -229,7 +232,10 @@ function App() {
         </div>
 
         <div className="card">
-          <h2 className="cardTitle">Barrier frequency</h2>
+          <div className="cardHeader">
+            <h2 className="cardTitle">Barrier frequency</h2>
+            <div className="cardMeta">How often each barrier appears</div>
+          </div>
           {entries.length === 0 ? (
             <div className="empty">No chart data yet.</div>
           ) : (
@@ -258,7 +264,10 @@ function App() {
 
       <main className="grid">
         <section className="card" aria-label="New walking entry">
-          <h2 className="cardTitle">New entry</h2>
+          <div className="cardHeader">
+            <h2 className="cardTitle">New entry</h2>
+            <div className="cardMeta">Add one walking event</div>
+          </div>
 
           <form className="form" onSubmit={handleSave}>
             <div className="field">
@@ -355,7 +364,10 @@ function App() {
         </section>
 
         <section className="card" aria-label="Saved walking entries">
-          <h2 className="cardTitle">Saved entries</h2>
+          <div className="cardHeader">
+            <h2 className="cardTitle">Saved entries</h2>
+            <div className="cardMeta">Most recent first</div>
+          </div>
 
           {entries.length === 0 ? (
             <div className="empty">

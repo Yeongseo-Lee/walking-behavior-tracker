@@ -1,17 +1,20 @@
+/* Academic / professional dashboard look */
 .page {
-  max-width: 980px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 28px 18px 56px;
+  padding: 28px 18px 64px;
 }
 
 .header {
   margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
 }
 
 .title {
   margin: 0;
-  font-size: 28px;
-  line-height: 1.2;
+  font-size: 30px;
+  line-height: 1.15;
   letter-spacing: -0.02em;
 }
 
@@ -42,20 +45,26 @@
 
 .summaryCard {
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px;
-  background: color-mix(in oklab, var(--bg) 92%, white);
+  border-radius: 14px;
+  padding: 12px 12px 12px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--bg) 92%, white),
+    color-mix(in oklab, var(--bg) 88%, white)
+  );
 }
 
 .summaryLabel {
   font-size: 12px;
   color: color-mix(in oklab, var(--text) 70%, transparent);
   margin-bottom: 6px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .summaryValue {
-  font-size: 18px;
-  font-weight: 650;
+  font-size: 20px;
+  font-weight: 700;
   letter-spacing: -0.01em;
 }
 
@@ -68,7 +77,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  margin: 16px 0;
+  margin: 18px 0 16px;
 }
 
 @media (max-width: 900px) {
@@ -86,12 +95,12 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-top: 4px;
+  padding-top: 6px;
 }
 
 .cssBarRow {
   display: grid;
-  grid-template-columns: 120px 1fr 64px;
+  grid-template-columns: 170px 1fr 68px;
   gap: 10px;
   align-items: center;
 }
@@ -104,16 +113,16 @@
 }
 
 .cssBarLabel {
-  font-size: 12px;
-  color: color-mix(in oklab, var(--text) 78%, transparent);
+  font-size: 12.5px;
+  color: color-mix(in oklab, var(--text) 82%, transparent);
   text-transform: none;
 }
 
 .cssBarTrack {
   height: 12px;
-  border: 1px solid var(--border);
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
   border-radius: 999px;
-  background: color-mix(in oklab, var(--bg) 88%, white);
+  background: color-mix(in oklab, var(--bg) 86%, white);
   overflow: hidden;
 }
 
@@ -130,9 +139,9 @@
 
 .cssBarValue {
   text-align: right;
-  font-size: 12px;
+  font-size: 12.5px;
   font-variant-numeric: tabular-nums;
-  color: color-mix(in oklab, var(--text) 80%, transparent);
+  color: color-mix(in oklab, var(--text) 82%, transparent);
 }
 
 @media (max-width: 520px) {
@@ -155,16 +164,43 @@
 }
 
 .card {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: color-mix(in oklab, var(--bg) 90%, white);
-  box-shadow: var(--shadow);
+  border: 1px solid color-mix(in oklab, var(--border) 88%, transparent);
+  border-radius: 14px;
+  background: color-mix(in oklab, var(--bg) 92%, white);
+  box-shadow: 0 10px 30px color-mix(in oklab, black 10%, transparent);
   padding: 16px;
 }
 
+.cardHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+}
+
 .cardTitle {
-  margin: 0 0 12px;
+  margin: 0;
   font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.cardMeta {
+  font-size: 12px;
+  color: color-mix(in oklab, var(--text) 70%, transparent);
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .cardHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .cardMeta {
+    white-space: normal;
+  }
 }
 
 .form {
@@ -191,17 +227,18 @@
 
 .label {
   font-size: 13px;
-  color: color-mix(in oklab, var(--text) 80%, transparent);
+  color: color-mix(in oklab, var(--text) 82%, transparent);
+  font-weight: 600;
 }
 
 .input,
 .select,
 .textarea {
   width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 10px;
-  background: var(--bg);
+  border: 1px solid color-mix(in oklab, var(--border) 88%, transparent);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: color-mix(in oklab, var(--bg) 92%, white);
   color: var(--text);
   font: inherit;
   box-sizing: border-box;
@@ -216,7 +253,7 @@
 .select:focus-visible,
 .textarea:focus-visible,
 .button:focus-visible {
-  outline: 2px solid color-mix(in oklab, var(--accent) 70%, white);
+  outline: 3px solid color-mix(in oklab, var(--accent) 55%, white);
   outline-offset: 2px;
 }
 
@@ -235,14 +272,14 @@
 }
 
 .button {
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  border: 1px solid color-mix(in oklab, var(--border) 88%, transparent);
+  border-radius: 12px;
   padding: 10px 12px;
   font: inherit;
   cursor: pointer;
-  background: var(--bg);
+  background: color-mix(in oklab, var(--bg) 92%, white);
   color: var(--text);
-  transition: transform 0.03s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
   white-space: nowrap;
 }
 
@@ -251,7 +288,7 @@
 }
 
 .button:active {
-  transform: translateY(1px);
+  transform: none;
 }
 
 .button.primary {
@@ -261,8 +298,8 @@
 }
 
 .button.danger {
-  background: color-mix(in oklab, #dc2626 88%, var(--bg));
-  border-color: color-mix(in oklab, #dc2626 72%, var(--border));
+  background: color-mix(in oklab, #b91c1c 86%, var(--bg));
+  border-color: color-mix(in oklab, #b91c1c 70%, var(--border));
   color: white;
 }
 
@@ -285,8 +322,8 @@
   gap: 10px;
   justify-content: space-between;
   align-items: flex-start;
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  border: 1px solid color-mix(in oklab, var(--border) 88%, transparent);
+  border-radius: 14px;
   padding: 12px;
   background: color-mix(in oklab, var(--bg) 94%, white);
 }
@@ -301,9 +338,9 @@
 .pill {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--border);
+  border: 1px solid color-mix(in oklab, var(--border) 88%, transparent);
   border-radius: 999px;
-  padding: 4px 8px;
+  padding: 4px 9px;
   font-size: 12px;
   background: color-mix(in oklab, var(--bg) 88%, white);
 }
