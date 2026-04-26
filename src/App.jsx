@@ -49,6 +49,42 @@ function App() {
     localStorage.setItem(storageKey, JSON.stringify(entries))
   }, [entries])
 
+  const summary = useMemo(() => {
+    const entryCount = entries.length
+    const totalMinutes = entries.reduce((sum, e) => sum + (Number(e?.minutes) || 0), 0)
+    const averageMinutes = entryCount === 0 ? 0 : totalMinutes / entryCount
+
+    function mostCommonValue(key) {
+      if (entryCount === 0) return null
+      const counts = new Map()
+      for (const e of entries) {
+        const raw = e?.[key]
+        const value = typeof raw === 'string' ? raw : String(raw ?? '')
+        if (!value) continue
+        counts.set(value, (counts.get(value) ?? 0) + 1)
+      }
+      if (counts.size === 0) return null
+
+      let bestValue = null
+      let bestCount = -1
+      for (const [value, count] of counts.entries()) {
+        if (count > bestCount) {
+          bestValue = value
+          bestCount = count
+        }
+      }
+      return bestValue
+    }
+
+    return {
+      entryCount,
+      totalMinutes,
+      averageMinutes,
+      mostCommonPurpose: mostCommonValue('purpose'),
+      mostCommonBarrier: mostCommonValue('barrier'),
+    }
+  }, [entries])
+
   function updateField(name, value) {
     setForm((prev) => ({ ...prev, [name]: value }))
   }
@@ -86,6 +122,35 @@ function App() {
           Log a walking entry, then see your saved history below. Your data stays on this device
           (saved in your browser).
         </p>
+
+        <section className="summary" aria-label="Dashboard summary">
+          <div className="summaryCard">
+            <div className="summaryLabel">Total walking minutes</div>
+            <div className="summaryValue">{summary.totalMinutes}</div>
+          </div>
+          <div className="summaryCard">
+            <div className="summaryLabel">Number of entries</div>
+            <div className="summaryValue">{summary.entryCount}</div>
+          </div>
+          <div className="summaryCard">
+            <div className="summaryLabel">Average minutes per entry</div>
+            <div className="summaryValue">
+              {summary.entryCount === 0 ? 0 : Math.round(summary.averageMinutes * 10) / 10}
+            </div>
+          </div>
+          <div className="summaryCard">
+            <div className="summaryLabel">Most common purpose</div>
+            <div className="summaryValue">
+              {summary.mostCommonPurpose ?? <span className="summaryMuted">No data yet</span>}
+            </div>
+          </div>
+          <div className="summaryCard">
+            <div className="summaryLabel">Most common barrier</div>
+            <div className="summaryValue">
+              {summary.mostCommonBarrier ?? <span className="summaryMuted">No data yet</span>}
+            </div>
+          </div>
+        </section>
       </header>
 
       <main className="grid">
